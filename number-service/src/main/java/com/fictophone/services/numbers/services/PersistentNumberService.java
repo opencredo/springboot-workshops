@@ -57,7 +57,7 @@ public final class PersistentNumberService implements NumberService {
     @Override
     public void configureNumber(Instant startInclusive, PhoneNumber number, NumberConfiguration numberConfiguration) {
         UserId owner = getOwnerAndConfiguration(startInclusive, number)
-                .map(OwnerAndConfiguration::getOwnerId)
+                .flatMap(OwnerAndConfiguration::getOwnerId)
                 .orElseThrow(() -> new IllegalStateException("Cannot configure number without an owner"));
 
         saveHistoricalAndCurrent(startInclusive, number, Optional.of(owner), Optional.of(numberConfiguration));
@@ -70,17 +70,17 @@ public final class PersistentNumberService implements NumberService {
                 number.getCountryCode(),
                 number.getNumber());
 
-        return maybeStatus.flatMap(this::toOwnerAndConfiguration);
+        return maybeStatus.map(this::toOwnerAndConfiguration);
     }
 
-    private Optional<OwnerAndConfiguration> toOwnerAndConfiguration(PhoneNumberStatusEntity status) {
+    private OwnerAndConfiguration toOwnerAndConfiguration(PhoneNumberStatusEntity status) {
         NumberConfiguration configuration = status.getConfiguration()
                 .map(NumberConfiguration::of)
                 .orElseGet(NumberConfiguration::empty);
 
-        return status.getOwnerId().map(ownerId -> OwnerAndConfiguration.of(
-                UserId.of(ownerId),
-                configuration));
+        return OwnerAndConfiguration.of(
+                status.getOwnerId().map(UserId::of),
+                configuration);
     }
 
     @Override

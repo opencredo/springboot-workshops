@@ -1,22 +1,23 @@
 package com.fictophone.services.numbers.domain;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class OwnerAndConfiguration {
 
-    public static OwnerAndConfiguration of(UserId ownerId, NumberConfiguration configuration) {
+    public static OwnerAndConfiguration of(Optional<UserId> ownerId, NumberConfiguration configuration) {
         return new OwnerAndConfiguration(ownerId, configuration);
     }
 
-    private final UserId ownerId;
+    private final Optional<UserId> ownerId;
     private final NumberConfiguration configuration;
 
-    private OwnerAndConfiguration(UserId ownerId, NumberConfiguration configuration) {
+    private OwnerAndConfiguration(Optional<UserId> ownerId, NumberConfiguration configuration) {
         this.ownerId = ownerId;
         this.configuration = configuration;
     }
 
-    public UserId getOwnerId() {
+    public Optional<UserId> getOwnerId() {
         return ownerId;
     }
 

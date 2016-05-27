@@ -75,7 +75,7 @@ public class PersistentNumberServiceIntegrationTest {
 
     private Optional<UserId> ownerOf(PhoneNumber number, Instant timestamp) {
         return numberService.getOwnerAndConfiguration(timestamp, number)
-                .map(OwnerAndConfiguration::getOwnerId);
+                .flatMap(OwnerAndConfiguration::getOwnerId);
     }
 
     @Test

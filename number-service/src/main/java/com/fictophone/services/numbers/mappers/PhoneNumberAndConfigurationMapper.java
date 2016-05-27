@@ -1,4 +1,4 @@
-package com.fictophone.services.numbers.mappings;
+package com.fictophone.services.numbers.mappers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -19,6 +19,7 @@ public interface NumberService {
     void configureNumber(Instant startInclusive, PhoneNumber number, NumberConfiguration numberConfiguration);
 
     Optional<OwnerAndConfiguration> getOwnerAndConfiguration(Instant atTime, PhoneNumber number);
+
     List<PhoneNumberAndConfiguration> getNumbersCurrentlyOwnedBy(UserId userId);
 
 }

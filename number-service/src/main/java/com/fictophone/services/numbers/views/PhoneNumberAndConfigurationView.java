@@ -5,12 +5,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 public final class PhoneNumberAndConfigurationView {
 
-    public static PhoneNumberAndConfigurationView of(String companyCode, String number, JsonNode configuration) {
-        return new PhoneNumberAndConfigurationView(companyCode, number, configuration);
+    public static PhoneNumberAndConfigurationView of(String countryCode, String number, JsonNode configuration) {
+        return new PhoneNumberAndConfigurationView(countryCode, number, configuration);
     }
 
     @JsonProperty
-    private final String companyCode;
+    private final String countryCode;
 
     @JsonProperty
     private final String number;
@@ -18,8 +18,8 @@ public final class PhoneNumberAndConfigurationView {
     @JsonProperty
     private final JsonNode configuration;
 
-    private PhoneNumberAndConfigurationView(String companyCode, String number, JsonNode configuration) {
-        this.companyCode = companyCode;
+    private PhoneNumberAndConfigurationView(String countryCode, String number, JsonNode configuration) {
+        this.countryCode = countryCode;
         this.number = number;
         this.configuration = configuration;
     }
