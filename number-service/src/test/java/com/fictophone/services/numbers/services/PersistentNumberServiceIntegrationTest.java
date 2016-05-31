@@ -42,7 +42,7 @@ public class PersistentNumberServiceIntegrationTest {
 
         assertThat(
                 numberService.getOwnerAndConfiguration(timestamp, number)
-                        .map(OwnerAndConfiguration::getOwnerId),
+                        .flatMap(OwnerAndConfiguration::getOwnerId),
                 equalTo(Optional.of(userId)));
     }
 
