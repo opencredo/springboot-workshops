@@ -1,5 +1,6 @@
 package com.fictophone.services.records.rest;
 
+import com.fictophone.services.records.mappers.CallRecordMapper;
 import com.fictophone.services.records.services.api.RecordsService;
 import com.fictophone.services.records.views.CallRecordView;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -14,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.fictophone.services.records.mappers.CallRecordMappers.callRecord2View;
-import static com.fictophone.services.records.mappers.CallRecordMappers.view2Record;
 import static java.util.stream.Collectors.toList;
 
 @RestController
@@ -23,10 +22,12 @@ import static java.util.stream.Collectors.toList;
 public class CallRecordsController {
 
     private final RecordsService recordsService;
+    private final CallRecordMapper mapper;
 
     @Autowired
-    public CallRecordsController(RecordsService recordsService) {
+    public CallRecordsController(RecordsService recordsService, CallRecordMapper mapper) {
         this.recordsService = recordsService;
+        this.mapper = mapper;
     }
 
     @ApiOperation("Create record")
@@ -37,7 +38,7 @@ public class CallRecordsController {
     @RequestMapping(name = "/records", method = RequestMethod.POST)
     public void addRecord(
             @ApiParam("The call record to store") @RequestBody CallRecordView record) {
-        recordsService.addRecord(view2Record.apply(record));
+        recordsService.addRecord(mapper.convertRecordView(record));
     }
 
     @ApiOperation("Retrieve records")
@@ -48,7 +49,7 @@ public class CallRecordsController {
     @RequestMapping(name = "/records", method = RequestMethod.GET)
     public List<CallRecordView> retrieveRecords() {
         return recordsService.retrieveRecords().stream()
-                .map(callRecord2View)
+                .map(mapper::convertRecord)
                 .collect(toList());
     }
 
