@@ -1,4 +1,4 @@
-package com.fictophone.services.numbers;
+package com.fictophone.services.records;
 
 import com.mangofactory.swagger.plugin.EnableSwagger;
 import org.springframework.boot.SpringApplication;
